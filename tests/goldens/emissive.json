@@ -1,0 +1,139 @@
+{
+  "format": "shader-as-code",
+  "version": 1,
+  "name": "MN Emissive",
+  "kind": "GROUP",
+  "blender": "4.2",
+  "id_properties": {
+    "mn.category": "emissive",
+    "mn.is_master": true,
+    "mn.origin": "framework",
+    "mn.version": 1
+  },
+  "interface": {
+    "inputs": [
+      {
+        "name": "Color",
+        "socket": "COLOR",
+        "default": [
+          1,
+          0.85,
+          0.55,
+          1
+        ]
+      },
+      {
+        "name": "Strength",
+        "socket": "FLOAT",
+        "default": 8,
+        "min": 0,
+        "max": 200
+      },
+      {
+        "name": "Surface Roughness",
+        "socket": "FLOAT",
+        "default": 0.4,
+        "min": 0,
+        "max": 1,
+        "subtype": "FACTOR",
+        "panel": "Surface"
+      },
+      {
+        "name": "Surface Color",
+        "socket": "COLOR",
+        "default": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "panel": "Surface"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "BSDF",
+        "socket": "SHADER"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "Group Input",
+      "type": "NodeGroupInput",
+      "location": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "Group Output",
+      "type": "NodeGroupOutput",
+      "location": [
+        560,
+        0
+      ]
+    },
+    {
+      "id": "bsdf",
+      "type": "ShaderNodeBsdfPrincipled",
+      "label": "Emissive",
+      "location": [
+        280,
+        0
+      ]
+    }
+  ],
+  "links": [
+    {
+      "from": [
+        "Group Input",
+        "Color"
+      ],
+      "to": [
+        "bsdf",
+        "Emission Color"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "Strength"
+      ],
+      "to": [
+        "bsdf",
+        "Emission Strength"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "Surface Color"
+      ],
+      "to": [
+        "bsdf",
+        "Base Color"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "Surface Roughness"
+      ],
+      "to": [
+        "bsdf",
+        "Roughness"
+      ]
+    },
+    {
+      "from": [
+        "bsdf",
+        "BSDF"
+      ],
+      "to": [
+        "Group Output",
+        "BSDF"
+      ]
+    }
+  ]
+}

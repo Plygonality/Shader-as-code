@@ -1,0 +1,197 @@
+{
+  "format": "shader-as-code",
+  "version": 1,
+  "name": "MN Surface",
+  "kind": "GROUP",
+  "blender": "4.2",
+  "id_properties": {
+    "mn.category": "surface",
+    "mn.is_master": true,
+    "mn.origin": "framework",
+    "mn.version": 1
+  },
+  "interface": {
+    "inputs": [
+      {
+        "name": "Base Color",
+        "socket": "COLOR",
+        "default": [
+          0.8,
+          0.8,
+          0.8,
+          1
+        ],
+        "description": "Albedo"
+      },
+      {
+        "name": "Metallic",
+        "socket": "FLOAT",
+        "default": 0,
+        "min": 0,
+        "max": 1,
+        "subtype": "FACTOR",
+        "description": "Dielectric to metal"
+      },
+      {
+        "name": "Roughness",
+        "socket": "FLOAT",
+        "default": 0.4,
+        "min": 0,
+        "max": 1,
+        "subtype": "FACTOR",
+        "description": "Micro-surface roughness"
+      },
+      {
+        "name": "IOR",
+        "socket": "FLOAT",
+        "default": 1.5,
+        "min": 1,
+        "max": 2.5,
+        "description": "Index of refraction"
+      },
+      {
+        "name": "Emission Color",
+        "socket": "COLOR",
+        "default": [
+          0,
+          0,
+          0,
+          1
+        ],
+        "panel": "Emission"
+      },
+      {
+        "name": "Emission Strength",
+        "socket": "FLOAT",
+        "default": 0,
+        "min": 0,
+        "max": 50,
+        "panel": "Emission"
+      },
+      {
+        "name": "Alpha",
+        "socket": "FLOAT",
+        "default": 1,
+        "min": 0,
+        "max": 1,
+        "subtype": "FACTOR",
+        "panel": "Alpha"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "BSDF",
+        "socket": "SHADER"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "Group Input",
+      "type": "NodeGroupInput",
+      "location": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "Group Output",
+      "type": "NodeGroupOutput",
+      "location": [
+        560,
+        0
+      ]
+    },
+    {
+      "id": "bsdf",
+      "type": "ShaderNodeBsdfPrincipled",
+      "label": "Surface",
+      "location": [
+        280,
+        0
+      ]
+    }
+  ],
+  "links": [
+    {
+      "from": [
+        "Group Input",
+        "Alpha"
+      ],
+      "to": [
+        "bsdf",
+        "Alpha"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "Base Color"
+      ],
+      "to": [
+        "bsdf",
+        "Base Color"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "Emission Color"
+      ],
+      "to": [
+        "bsdf",
+        "Emission Color"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "Emission Strength"
+      ],
+      "to": [
+        "bsdf",
+        "Emission Strength"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "IOR"
+      ],
+      "to": [
+        "bsdf",
+        "IOR"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "Metallic"
+      ],
+      "to": [
+        "bsdf",
+        "Metallic"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "Roughness"
+      ],
+      "to": [
+        "bsdf",
+        "Roughness"
+      ]
+    },
+    {
+      "from": [
+        "bsdf",
+        "BSDF"
+      ],
+      "to": [
+        "Group Output",
+        "BSDF"
+      ]
+    }
+  ]
+}
