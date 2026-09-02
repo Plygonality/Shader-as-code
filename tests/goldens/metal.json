@@ -1,0 +1,182 @@
+{
+  "format": "shader-as-code",
+  "version": 1,
+  "name": "MN Metal",
+  "kind": "GROUP",
+  "blender": "4.2",
+  "id_properties": {
+    "mn.category": "metal",
+    "mn.is_master": true,
+    "mn.origin": "framework",
+    "mn.version": 1
+  },
+  "interface": {
+    "inputs": [
+      {
+        "name": "Color",
+        "socket": "COLOR",
+        "default": [
+          0.72,
+          0.72,
+          0.74,
+          1
+        ],
+        "description": "F0 / reflectance"
+      },
+      {
+        "name": "Roughness",
+        "socket": "FLOAT",
+        "default": 0.25,
+        "min": 0,
+        "max": 1,
+        "subtype": "FACTOR",
+        "description": "Brush, polish, grit"
+      },
+      {
+        "name": "Anisotropy",
+        "socket": "FLOAT",
+        "default": 0,
+        "min": 0,
+        "max": 1,
+        "subtype": "FACTOR",
+        "description": "Brushed-metal stretch"
+      },
+      {
+        "name": "Rotation",
+        "socket": "FLOAT",
+        "default": 0,
+        "min": 0,
+        "max": 1,
+        "subtype": "FACTOR",
+        "description": "Anisotropic tangent rotation"
+      },
+      {
+        "name": "Coat Weight",
+        "socket": "FLOAT",
+        "default": 0,
+        "min": 0,
+        "max": 1,
+        "subtype": "FACTOR",
+        "panel": "Coat"
+      },
+      {
+        "name": "Coat Roughness",
+        "socket": "FLOAT",
+        "default": 0.03,
+        "min": 0,
+        "max": 1,
+        "subtype": "FACTOR",
+        "panel": "Coat"
+      }
+    ],
+    "outputs": [
+      {
+        "name": "BSDF",
+        "socket": "SHADER"
+      }
+    ]
+  },
+  "nodes": [
+    {
+      "id": "Group Input",
+      "type": "NodeGroupInput",
+      "location": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "Group Output",
+      "type": "NodeGroupOutput",
+      "location": [
+        560,
+        0
+      ]
+    },
+    {
+      "id": "bsdf",
+      "type": "ShaderNodeBsdfPrincipled",
+      "label": "Metal",
+      "location": [
+        280,
+        0
+      ],
+      "inputs": {
+        "Metallic": 1,
+        "Specular IOR Level": 1
+      }
+    }
+  ],
+  "links": [
+    {
+      "from": [
+        "Group Input",
+        "Anisotropy"
+      ],
+      "to": [
+        "bsdf",
+        "Anisotropic"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "Coat Roughness"
+      ],
+      "to": [
+        "bsdf",
+        "Coat Roughness"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "Coat Weight"
+      ],
+      "to": [
+        "bsdf",
+        "Coat Weight"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "Color"
+      ],
+      "to": [
+        "bsdf",
+        "Base Color"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "Rotation"
+      ],
+      "to": [
+        "bsdf",
+        "Anisotropic Rotation"
+      ]
+    },
+    {
+      "from": [
+        "Group Input",
+        "Roughness"
+      ],
+      "to": [
+        "bsdf",
+        "Roughness"
+      ]
+    },
+    {
+      "from": [
+        "bsdf",
+        "BSDF"
+      ],
+      "to": [
+        "Group Output",
+        "BSDF"
+      ]
+    }
+  ]
+}
